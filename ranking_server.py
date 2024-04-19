@@ -21,7 +21,7 @@ NEW_POSTS = [
 
 
 # fLoad environment variables
-file = open("/etc/secrets/api_keytxt", "r")
+file = open("/etc/secrets/api_key.txt", "r")
 API_TOKEN = file.read()
 file.close()
 
