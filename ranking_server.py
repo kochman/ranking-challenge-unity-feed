@@ -21,6 +21,10 @@ NEW_POSTS = [
 
 
 # from sample_data import NEW_POSTS
+# file = open("data.txt", "r")
+#for line in file.readlines():
+   # print(line)
+#file.close()
 
 # load_dotenv()  # if a .env file exists, load environment variables from it
 client = OpenAI(api_key=secret.API_TOKEN)
