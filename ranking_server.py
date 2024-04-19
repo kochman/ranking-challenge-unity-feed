@@ -22,7 +22,7 @@ NEW_POSTS = [
 
 # fLoad environment variables
 file = open("/etc/secrets/api_keytxt", "r")
-API_TOKEN = file.read():
+API_TOKEN = file.read()
 file.close()
 
 # load_dotenv()  # if a .env file exists, load environment variables from it
