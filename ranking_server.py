@@ -20,14 +20,13 @@ NEW_POSTS = [
 ]
 
 
-# from sample_data import NEW_POSTS
-# file = open("data.txt", "r")
-#for line in file.readlines():
-   # print(line)
-#file.close()
+# fLoad environment variables
+file = open("/etc/secrets/api_keytxt", "r")
+API_TOKEN = file.read():
+file.close()
 
 # load_dotenv()  # if a .env file exists, load environment variables from it
-client = OpenAI(api_key=secret.API_TOKEN)
+client = OpenAI(api_key=API_TOKEN)
 app = Flask(__name__)
 CORS(app)
 
