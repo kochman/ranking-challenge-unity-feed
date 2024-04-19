@@ -1,6 +1,5 @@
 requests
 openai
-dotenv
 flask
 flask_cors
 pytest
