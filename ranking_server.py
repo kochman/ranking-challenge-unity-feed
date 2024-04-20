@@ -94,7 +94,9 @@ def homerun():
 
 @app.route("/rank1", methods=["POST","GET"])  # Allow POST requests for this endpoint
 def rank_items():
-    post_data = request.json
+    # post_data = request.json  # Original statement
+    post_data = request.get_json()  # Added this statement
+    
     items = post_data.get("items")
 
     ranked_ids = generate_rankings(items)
