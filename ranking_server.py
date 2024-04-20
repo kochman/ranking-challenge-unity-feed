@@ -88,7 +88,7 @@ def generate_rankings(items):
     return rankings
 
 # FOR TESTING 
-@app.route("/rank")
+@app.route("/rank", ["GET"])
 def homerun():
     return 'home again'
 
