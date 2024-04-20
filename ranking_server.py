@@ -171,7 +171,7 @@ def homerun():
         # print(response.text)
         return response.text
     
-    return 'home again'
+    # return 'home again'
 
 @app.route("/rank", methods=["POST"])  # Allow POST requests for this endpoint
 def rank_items():
