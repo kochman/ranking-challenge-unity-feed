@@ -33,7 +33,20 @@ CORS(app)
 # Home
 @app.route("/")
 def home():
-    return 'home'
+    return 'This is team Unity-Feed' s take on PRC:
+
+❤️ Thesis:
+Hope is the strongest antidote to radicalization. 
+
+Without hope, peace is not possible.
+
+📈 The shift we are measuring: Can we make people more hopeful? 
+
+💭 Hypothesis: Yes, by displaying content that showcases unity and coexistence.
+
+📝 Prior evidence to suggest this: My friends and family who became jaded since the war broke out on 10/7 have said my Unity Club gives them hope. Other members in Unity Club have shared the same feedback. ✨ 
+
+We’ll start with 🇮🇱 🇵🇸 focus and broaden it if we don’t see the variables shift.'
 
 def generate_rankings(items):
     prompt = ""
