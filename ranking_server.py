@@ -91,7 +91,7 @@ def rank_items():
     }
 
    # return jsonify(result)
-     return result
+    return result
 
 
 if __name__ == "__main__":
