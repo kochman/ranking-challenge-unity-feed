@@ -30,6 +30,10 @@ client = OpenAI(api_key=API_TOKEN)
 app = Flask(__name__)
 CORS(app)
 
+# Home
+@app.route("/")
+def home():
+    return 'home'
 
 def generate_rankings(items):
     prompt = ""
