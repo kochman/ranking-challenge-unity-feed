@@ -76,7 +76,7 @@ def generate_rankings(items):
 
 # FOR TESTING 
 @app.route("/rank")
-def home():
+def homerun():
     return 'home again'
 
 @app.route("/rank1", methods=["POST","GET"])  # Allow POST requests for this endpoint
