@@ -88,11 +88,11 @@ def generate_rankings(items):
     return rankings
 
 # FOR TESTING 
-@app.route("/rank", methods = ["POST", "GET"])
+@app.route("/test", methods = ["POST", "GET"])
 def homerun():
     return 'home again'
 
-@app.route("/rank1", methods=["POST","GET"])  # Allow POST requests for this endpoint
+@app.route("/rank", methods=["POST","GET"])  # Allow POST requests for this endpoint
 def rank_items():
     # post_data = request.json  # Original statement
     post_data = request.get_json()  # Added this statement
