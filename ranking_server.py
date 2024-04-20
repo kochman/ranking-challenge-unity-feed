@@ -161,13 +161,15 @@ def homerun():
         try:
             # Attempt to parse the JSON response
             json_response = response.json()
-            pprint(json_response)
+            # pprint(json_response)
+            return json_response
         except requests.exceptions.JSONDecodeError:
-            print("Failed to parse JSON response. Response may be empty.")
+            # print("Failed to parse JSON response. Response may be empty.")
+            return "Failed to parse JSON response. Response may be empty."
     else:
-        print(f"Request failed with status code: {response.status_code}")
-        print(response.text)
-
+        # print(f"Request failed with status code: {response.status_code}")
+        # print(response.text)
+        return response.text
     
     return 'home again'
 
