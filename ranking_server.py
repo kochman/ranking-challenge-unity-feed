@@ -1,4 +1,4 @@
-import json
+justimport json
 import os
 
 # from dotenv import load_dotenv
@@ -90,7 +90,8 @@ def rank_items():
         "new_items": NEW_POSTS,
     }
 
-    return jsonify(result)
+   # return jsonify(result)
+   return result
 
 
 if __name__ == "__main__":
