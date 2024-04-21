@@ -4,16 +4,16 @@ import os
 # from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from openai import OpenAI
+from llama_cpp import Llama
 
 
-# fLoad environment variables
-file = open("/etc/secrets/api_key.txt", "r")
-API_TOKEN = file.read()
-file.close()
+try:
+    os.stat("Meta-Llama-3-8B-Instruct.Q6_K.gguf")
+except:
+    print("Please download https://huggingface.co/QuantFactory/Meta-Llama-3-8B-Instruct-GGUF/blob/main/Meta-Llama-3-8B-Instruct.Q6_K.gguf and place it in the current directory.")
+    exit(1)
 
-# load_dotenv()  # if a .env file exists, load environment variables from it
-client = OpenAI(api_key=API_TOKEN)
+llm = Llama(model_path="Meta-Llama-3-8B-Instruct.Q6_K.gguf")
 app = Flask(__name__)
 CORS(app)
 
@@ -40,12 +40,11 @@ def generate_rankings(items):
     for i, item in enumerate(items):
         prompt += f"ITEM: {i}:\n{item['text']}\n\n"
 
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+    response = llm.create_chat_completion(
         messages=[
             {
                 "role": "system",
-                "content": 'You are a helpful assistant that processes text and returns results in JSON format. Reorder the items you are given in terms of their positivity, with the most positive item first, and include your reasoning. Give me a JSON array in the following format: [ {"item_idx": int, "reason": str} ]. Kindly use the following as a guide for categorization of text concerning Palestine and Israel: A one-sided, Palestinian(s) view that only mentions Israel govt and/or people in a negative light should be considered as negative. A one-sided, Palestinian(s) view with no mention of Israeli govt and/or people should be considered as neutral. A one-sided, Israeli(s) view with no mention of Palestinian govt and/or people should be considered as neutral. A one-sided, Israeli(s) view which only mentions Palestinian govt and/or people in a negative light should be considered as negative. Palestinians and Israelis focusing on overcoming division should be considered as positive',
+                "content": 'You are a helpful assistant that processes text and returns results in JSON format. Reorder the items you are given in terms of their positivity, with the most positive item first, and include your reasoning. Give me a JSON object in the following format: {"items": [{"item_idx": int, "reason": str}]}. Kindly use the following as a guide for categorization of text concerning Palestine and Israel: A one-sided, Palestinian(s) view that only mentions Israel govt and/or people in a negative light should be considered as negative. A one-sided, Palestinian(s) view with no mention of Israeli govt and/or people should be considered as neutral. A one-sided, Israeli(s) view with no mention of Palestinian govt and/or people should be considered as neutral. A one-sided, Israeli(s) view which only mentions Palestinian govt and/or people in a negative light should be considered as negative. Palestinians and Israelis focusing on overcoming division should be considered as positive',
             },
             {
                 "role": "user",
@@ -53,23 +52,44 @@ def generate_rankings(items):
             },
             {
                 "role": "assistant",
-                "content": '[ {"item_idx": 0, "reason": "The statement is very positive."}, {"item_idx": 3, "reason": "The statement is somewhat positive."}, {"item_idx": 2, "reason": "The statement is neutral."}, {"item_idx": 1, "reason": "The statement is negative."} ]',
+                "content": '{"items": [{"item_idx": 0, "reason": "The statement is very positive."}, {"item_idx": 3, "reason": "The statement is somewhat positive."}, {"item_idx": 2, "reason": "The statement is neutral."}, {"item_idx": 1, "reason": "The statement is negative."}]}',
             },
             {
                 "role": "user",
                 "content": prompt,
             },
         ],
+        response_format={
+            "type": "json_object",
+            "schema": {
+                "type": "object",
+                "properties": {
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "item_idx": {"type": "number"},
+                                "reason": {"type": "string"}
+                            },
+                            "required": ["item_idx", "reason"]
+                        }
+                    }
+                },
+                "required": ["items"]
+            },
+        }
     )
 
-    json_results = response.choices[0].message.content.strip()
+    json_results = response["choices"][0]["message"]["content"].strip()
 
     # From the docs
     # Warning: Be cautious when parsing JSON data from untrusted sources. A malicious JSON string may cause the decoder to
     # consume considerable CPU and memory resources. Limiting the size of data to be parsed is recommended.
     results = json.loads(json_results)
 
-    indices = [item["item_idx"] for item in results]
+    results_items = results["items"]
+    indices = [item["item_idx"] for item in results_items]
     rankings = [items[i]["id"] for i in indices]
 
     return rankings

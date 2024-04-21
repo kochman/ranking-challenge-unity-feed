@@ -1,6 +1,6 @@
 requests
-openai
 flask
 flask_cors
 pytest
 gunicorn
+llama-cpp-python
