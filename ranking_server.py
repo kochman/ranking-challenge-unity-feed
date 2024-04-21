@@ -7,20 +7,6 @@ from flask_cors import CORS
 from openai import OpenAI
 
 
-# some new posts that can be added to the response
-NEW_POSTS = []
-NEW_POSTS1 = [
-    {
-        "id": "571775f3-2564-4cf5-b01c-f4cb6bab461b",
-        "url": "https://reddit.com/r/PRCExample/comments/1f33ead/example_to_insert",
-    },
-    {
-        "id": "1fcbb164-f81f-4532-b068-2561941d0f63",
-        "url": "https://reddit.com/r/PRCExample/comments/ef56a23/another_example_to_insert",
-    },
-]
-
-
 # fLoad environment variables
 file = open("/etc/secrets/api_key.txt", "r")
 API_TOKEN = file.read()
@@ -102,8 +88,7 @@ def rank_items():
     ranked_ids = [new_post["id"] for new_post in NEW_POSTS] + ranked_ids
 
     result = {
-        "ranked_ids": ranked_ids,
-        "new_items": NEW_POSTS,
+        "ranked_ids": ranked_ids
     }
 
     return jsonify(result)
