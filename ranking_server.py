@@ -85,7 +85,7 @@ def rank_items():
     ranked_ids = generate_rankings(items)
 
     # Add new posts (not part of the candidate set) to the top of the result
-    ranked_ids = [new_post["id"] for new_post in NEW_POSTS] + ranked_ids
+    # ranked_ids = [new_post["id"] for new_post in NEW_POSTS] + ranked_ids
 
     result = {
         "ranked_ids": ranked_ids
