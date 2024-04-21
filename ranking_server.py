@@ -8,7 +8,8 @@ from openai import OpenAI
 
 
 # some new posts that can be added to the response
-NEW_POSTS = [
+NEW_POSTS = []
+NEW_POSTS1 = [
     {
         "id": "571775f3-2564-4cf5-b01c-f4cb6bab461b",
         "url": "https://reddit.com/r/PRCExample/comments/1f33ead/example_to_insert",
