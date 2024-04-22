@@ -17,4 +17,5 @@ RUN pip install -r requirements.txt
 COPY . .
 
 EXPOSE 5000
+ENV LOCAL_LLM=1
 CMD ["gunicorn", "-b", "0.0.0.0:5000", "-w", "4", "-k", "gevent", "--worker-tmp-dir", "/dev/shm", "--timeout", "120", "ranking_server:app"]
