@@ -7,13 +7,14 @@ from flask_cors import CORS
 from llama_cpp import Llama, LlamaRAMCache
 
 
+model_name = "Meta-Llama-3-8B-Instruct.Q4_K_S.gguf"
 try:
-    os.stat("Meta-Llama-3-8B-Instruct.Q6_K.gguf")
+    os.stat(model_name)
 except:
-    print("Please download https://huggingface.co/QuantFactory/Meta-Llama-3-8B-Instruct-GGUF/blob/main/Meta-Llama-3-8B-Instruct.Q6_K.gguf and place it in the current directory.")
+    print(f"Please download https://huggingface.co/QuantFactory/Meta-Llama-3-8B-Instruct-GGUF/blob/main/{model_name} and place it in the current directory.")
     exit(1)
 
-llm = Llama(model_path="Meta-Llama-3-8B-Instruct.Q6_K.gguf")
+llm = Llama(model_path=model_name)
 llm.set_cache(LlamaRAMCache())
 app = Flask(__name__)
 CORS(app)
