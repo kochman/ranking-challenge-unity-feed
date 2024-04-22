@@ -4,7 +4,7 @@ import os
 # from dotenv import load_dotenv
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from llama_cpp import Llama
+from llama_cpp import Llama, LlamaRAMCache
 
 
 try:
@@ -14,6 +14,7 @@ except:
     exit(1)
 
 llm = Llama(model_path="Meta-Llama-3-8B-Instruct.Q6_K.gguf")
+llm.set_cache(LlamaRAMCache())
 app = Flask(__name__)
 CORS(app)
 
